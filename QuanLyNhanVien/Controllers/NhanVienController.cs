@@ -75,9 +75,18 @@ namespace QuanLyNhanVien.Controllers
         /// <param name="nhanvien">nhanvien</param>
         /// <returns>NhanVien created</returns>
         [HttpPost]
-        public ActionResult<NhanVien> Create(NhanVien nhanvien)
+        public ActionResult<ResponseResult<NhanVien>> Create(NhanVien nhanvien)
         {
-            _nvService.Create(nhanvien);
+            try
+            {
+                _nvService.Create(nhanvien);
+            } catch(Exception e)
+            {
+                var res = new ResponseResult<NhanVien>();
+                res.Code = "500";
+                res.Message = "Create Failed : " + e.Message;
+                return res;
+            }
 
             return CreatedAtRoute("GetNhanVien", new { id = nhanvien.id.ToString() }, nhanvien);
         }
@@ -101,7 +110,15 @@ namespace QuanLyNhanVien.Controllers
                 return res;
             }
 
-            _nvService.Update(id, nhanvienIn);
+            try
+            {
+                _nvService.Update(id, nhanvienIn);
+            } catch (Exception e)
+            {
+                res.Code = "500";
+                res.Message = "Update Failed : " + e.Message;
+                return res;
+            }
 
             res.Code = NoContent().StatusCode.ToString();
             res.Message = "Update Success";
