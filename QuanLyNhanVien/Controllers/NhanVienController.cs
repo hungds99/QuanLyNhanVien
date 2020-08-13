@@ -14,7 +14,7 @@ namespace QuanLyNhanVien.Controllers
     /// </summary>
     /// <author>Sy Hung</author>
     /// <createdDate>13/08/2020</createdDate>
-    /// <updatedDate>13/08/2020</updatedDate>
+    /// <updatedDate>14/08/2020</updatedDate>
     [Route("api/nhanvien/")]
     [ApiController]
     public class NhanVienController : ControllerBase
