@@ -10,8 +10,11 @@ using System.Threading.Tasks;
 namespace QuanLyNhanVien.Controllers
 {
     /// <summary>
-    /// @Author: Sy Hung
+    /// NhanVien controller for api
     /// </summary>
+    /// <author>Sy Hung</author>
+    /// <createdDate>13/08/2020</createdDate>
+    /// <updatedDate>13/08/2020</updatedDate>
     [Route("api/nhanvien/")]
     [ApiController]
     public class NhanVienController : ControllerBase
@@ -23,6 +26,10 @@ namespace QuanLyNhanVien.Controllers
             _nvService = nvService;
         }
 
+        /// <summary>
+        /// Get all NhanVien
+        /// </summary>
+        /// <returns>List NhanVien</returns>
         [HttpGet]
         public ResponseResult<List<NhanVien>> Get()
         {
@@ -33,7 +40,12 @@ namespace QuanLyNhanVien.Controllers
             return res;
         }
 
-        [HttpGet("{id:length(24)}", Name = "GetNhanVien")]
+        /// <summary>
+        /// Get NhanVien By id
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns>NhanVien</returns>
+        [HttpGet("{id}", Name = "GetNhanVien")]
         public ResponseResult<NhanVien> Get(string id)
         {
             var res = new ResponseResult<NhanVien>();
@@ -46,13 +58,18 @@ namespace QuanLyNhanVien.Controllers
                 return res;
             }
 
-            res.Code = NotFound().StatusCode.ToString();
+            res.Code = Ok().StatusCode.ToString();
             res.Message = "Success";
             res.Result = nhanvien;
 
             return res;
         }
 
+        /// <summary>
+        /// Create a new NhanVien
+        /// </summary>
+        /// <param name="nhanvien">nhanvien</param>
+        /// <returns>NhanVien created</returns>
         [HttpPost]
         public ActionResult<NhanVien> Create(NhanVien nhanvien)
         {
@@ -61,34 +78,56 @@ namespace QuanLyNhanVien.Controllers
             return CreatedAtRoute("GetNhanVien", new { id = nhanvien.id.ToString() }, nhanvien);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, NhanVien nhanvienIn)
+        /// <summary>
+        /// Update a existing NhanVien
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <param name="nhanvienIn">nhanvien input</param>
+        /// <returns>nhanvien updated</returns>
+        [HttpPut("{id}")]
+        public ResponseResult<NhanVien> Update(string id, NhanVien nhanvienIn)
         {
+            var res = new ResponseResult<NhanVien>();
             var book = _nvService.Get(id);
 
             if (book == null)
             {
-                return NotFound();
+                res.Code = NotFound().StatusCode.ToString();
+                res.Message = "Not Found";
+                return res;
             }
 
             _nvService.Update(id, nhanvienIn);
 
-            return NoContent();
+            res.Code = NoContent().StatusCode.ToString();
+            res.Message = "Update Success";
+            res.Result = nhanvienIn;
+            return res;
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public IActionResult Delete(string id)
+        /// <summary>
+        /// Delete a existing NhanVien
+        /// </summary>
+        /// <param name="id">id</param>
+        /// <returns>NhanVien deleted</returns>
+        [HttpDelete("{id}")]
+        public ResponseResult<NhanVien> Delete(string id)
         {
+            var res = new ResponseResult<NhanVien>();
             var nhanvien = _nvService.Get(id);
 
             if (nhanvien == null)
             {
-                return NotFound();
+                res.Code = NotFound().StatusCode.ToString();
+                res.Message = "Not Found";
+                return res;
             }
 
             _nvService.Remove(nhanvien.id);
 
-            return NoContent();
+            res.Code = NoContent().StatusCode.ToString();
+            res.Message = "Delete Success";
+            return res;
         }
     }
 }
