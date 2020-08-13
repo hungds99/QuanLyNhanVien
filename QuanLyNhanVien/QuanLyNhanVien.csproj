@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\QLNV.Models\QLNV.Models.csproj" />
+    <ProjectReference Include="..\QLNV.Services\QLNV.Services.csproj" />
+    <ProjectReference Include="..\QLNV.Utilities\QLNV.Utilities.csproj" />
+  </ItemGroup>
+
+
+</Project>
