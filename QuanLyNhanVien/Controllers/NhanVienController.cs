@@ -21,6 +21,10 @@ namespace QuanLyNhanVien.Controllers
     {
         private readonly INhanVienService _nvService;
 
+        /// <summary>
+        /// INhanVienService inject NhanVienController
+        /// </summary>
+        /// <param name="nvService"></param>
         public NhanVienController(INhanVienService nvService)
         {
             _nvService = nvService;
